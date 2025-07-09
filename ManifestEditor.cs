@@ -96,7 +96,7 @@ internal class ManifestEditor
 		{
 			Attributes = 
 			{
-				new("scheme", AndroidNamespaceUri, 16842791, $"eos.{clientId.ToLower()}"),
+				new("scheme", AndroidNamespaceUri, 0x01010027, $"eos.{clientId.ToLower()}"),
 			}
 		});
 
@@ -120,8 +120,8 @@ internal class ManifestEditor
 		{
 			Attributes =
 			{
-				new("authorities", AndroidNamespaceUri, 16842776, "com.StressLevelZero.BONELAB.androidx-startup"),
-				new("exported", AndroidNamespaceUri, 16844000, "false"),
+				new("authorities", AndroidNamespaceUri, 0x01010018, "com.StressLevelZero.BONELAB.androidx-startup"),
+				new("exported", AndroidNamespaceUri, 16842768, "false"),
 				new("name", AndroidNamespaceUri, NameAttributeResourceId, "androidx.startup.InitializationProvider"),
 			}
 		};
@@ -131,7 +131,7 @@ internal class ManifestEditor
 			Attributes =
 			{
 				new("name", AndroidNamespaceUri, NameAttributeResourceId, "androidx.emoji2.text.EmojiCompatInitializer"),
-				new("value", AndroidNamespaceUri, 16842788, "androidx.startup"),
+				new("value", AndroidNamespaceUri, 0x01010024, "androidx.startup"),
 			}
 		});
 
@@ -140,7 +140,7 @@ internal class ManifestEditor
 			Attributes =
 			{
 				new("name", AndroidNamespaceUri, NameAttributeResourceId, "androidx.lifecycle.ProcessLifecycleInitializer"),
-				new("value", AndroidNamespaceUri, 16842788, "androidx.startup"),
+				new("value", AndroidNamespaceUri, 0x01010024, "androidx.startup"),
 			}
 		});
 
@@ -149,7 +149,7 @@ internal class ManifestEditor
 			Attributes =
 			{
 				new("name", AndroidNamespaceUri, NameAttributeResourceId, "androidx.profileinstaller.ProfileInstallerInitializer"),
-				new("value", AndroidNamespaceUri, 16842788, "androidx.startup"),
+				new("value", AndroidNamespaceUri, 0x01010024, "androidx.startup"),
 			}
 		});
 
@@ -177,11 +177,11 @@ internal class ManifestEditor
 		{
 			Attributes =
 			{
-				new("directBootAware", AndroidNamespaceUri, 16844018, "false"),
-				new("enabled", AndroidNamespaceUri, 16842766, "true"),
-				new("exported", AndroidNamespaceUri, 16844000, "true"),
+				new("directBootAware", AndroidNamespaceUri, 0x01010505, "false"),
+				new("enabled", AndroidNamespaceUri, 0x0101000e, "true"),
+				new("exported", AndroidNamespaceUri, 16842768, "true"),
 				new("name", AndroidNamespaceUri, NameAttributeResourceId, "androidx.profileinstaller.ProfileInstallReceiver"),
-				new("permission", AndroidNamespaceUri, 16842758, "android.permission.DUMP"),
+				new("permission", AndroidNamespaceUri, 0x01010006, "android.permission.DUMP"),
 			}
 		};
 
