@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <None Remove="MelonLoader.Installer.Core.dll" />
+    <None Remove="resources.arsc" />
     <None Remove="resources.zip" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="resources.arsc" />
     <EmbeddedResource Include="resources.zip" />
   </ItemGroup>
 
