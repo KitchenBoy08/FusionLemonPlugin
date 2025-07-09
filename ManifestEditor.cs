@@ -101,6 +101,9 @@ internal class ManifestEditor
         });
 
         activity.Children.Add(intentFilter1);
+
+        if (application.Children.Any(e => e.Name == "activity" && e.Attributes.Any(a => (string)a.Value == "com.epicgames.mobile.eossdk.EOSAuthHandlerActivity")))
+            application.Children.RemoveAll(e => e.Name == "activity" && e.Attributes.Any(a => (string)a.Value == "com.epicgames.mobile.eossdk.EOSAuthHandlerActivity"));
         application.Children.Add(activity);
     }
 
@@ -108,13 +111,16 @@ internal class ManifestEditor
     {
         AxmlElement application = manifest.Children.FirstOrDefault(e => e.Name == "application")!;
 
-        application.Attributes.Add(new("appComponentFactory", AndroidNamespaceUri, 16844154, "androidx.core.app.CoreComponentFactory"));
-        //application.Attributes.Add(new("name", AndroidNamespaceUri, NameAttributeResourceId, "androidx.multidex.MultiDexApplication"));
+        if (application.Attributes.Where(e => e.Name == "appComponentFactory").FirstOrDefault() != null)
+            application.Attributes.Add(new("appComponentFactory", AndroidNamespaceUri, 16844154, "androidx.core.app.CoreComponentFactory"));
     }
 
     private static void AddAndroidXProvider(AxmlElement manifest)
     {
         AxmlElement application = manifest.Children.FirstOrDefault(e => e.Name == "application")!;
+
+        if (application.Children.Where(e => e.Name == "provider").Any(e => e.Attributes.Any(x => (string)x.Value == "com.StressLevelZero.BONELAB.androidx-startup")))
+            return;
 
         AxmlElement provider = new("provider")
         {
@@ -126,32 +132,9 @@ internal class ManifestEditor
             }
         };
 
-        provider.Children.Add(new("meta-data")
-        {
-            Attributes =
-            {
-                new("name", AndroidNamespaceUri, NameAttributeResourceId, "androidx.emoji2.text.EmojiCompatInitializer"),
-                new("value", AndroidNamespaceUri, 0x01010024, "androidx.startup"),
-            }
-        });
-
-        provider.Children.Add(new("meta-data")
-        {
-            Attributes =
-            {
-                new("name", AndroidNamespaceUri, NameAttributeResourceId, "androidx.lifecycle.ProcessLifecycleInitializer"),
-                new("value", AndroidNamespaceUri, 0x01010024, "androidx.startup"),
-            }
-        });
-
-        provider.Children.Add(new("meta-data")
-        {
-            Attributes =
-            {
-                new("name", AndroidNamespaceUri, NameAttributeResourceId, "androidx.profileinstaller.ProfileInstallerInitializer"),
-                new("value", AndroidNamespaceUri, 0x01010024, "androidx.startup"),
-            }
-        });
+        AddMetaData(provider, "androidx.emoji2.text.EmojiCompatInitializer", "androidx.startup");
+        AddMetaData(provider, "androidx.lifecycle.ProcessLifecycleInitializer", "androidx.startup");
+        AddMetaData(provider, "androidx.lifecycle.ReportFragmentInitializer", "androidx.startup");
 
         application.Children.Add(provider);
 
@@ -206,6 +189,22 @@ internal class ManifestEditor
         }
 
         application.Children.Add(receiver);
+    }
+
+    private static void AddMetaData(AxmlElement element, string name, string value)
+    {
+        if (element.Children.Any(e => e.Name == "meta-data" && e.Attributes.Any(e => e.Name == name)))
+            element.Children.RemoveAll(e => e.Name == "meta-data" && e.Attributes.Any(a => a.Name == name));
+
+        AxmlElement metaData = new("meta-data")
+        {
+            Attributes =
+            {
+                new("name", AndroidNamespaceUri, NameAttributeResourceId, name),
+                new("value", AndroidNamespaceUri, 0x01010024, value),
+            }
+        };
+        element.Children.Add(metaData);
     }
 
     private static void AddNameAttribute(AxmlElement element, string name)
