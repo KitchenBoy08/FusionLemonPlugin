@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="MelonLoader.Installer.Core.dll" />
+    <None Remove="resources.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="resources.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MelonLoader.Installer.Core">
+      <HintPath>MelonLoader.Installer.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
