@@ -10,12 +10,8 @@ internal class DexEditor
         using FileStream zipStream = new(apkPath, FileMode.Open);
         using ZipArchive archive = new(zipStream, ZipArchiveMode.Read | ZipArchiveMode.Update);
 
-        // If there are multiple dex files, either the patch is already applied or someone else has been a lil goofy
-        if (GetDexCount(archive) > 1)
-            return false;
-
-        // Dex naming convention: classes.dex, classes2.dex, classes3.dex, etc.
-        // We want the original classes.dex to be last
+        // dex naming convention: classes.dex, classes1.dex, classes2.dex, etc.
+        // we want the original classes.dex to be last
         RenameEntry(archive, "classes.dex", "classes3.dex");
 
         using Stream? resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("BonelabFusionPatch.resources.zip");
@@ -34,19 +30,6 @@ internal class DexEditor
         }
 
         return true;
-    }
-
-    private static int GetDexCount(ZipArchive archive)
-    {
-        int count = 0;
-        foreach (var entry in archive.Entries)
-        {
-            if (entry.FullName.StartsWith("classes") && !string.IsNullOrEmpty(entry.Name))
-            {
-                count++;
-            }
-        }
-        return count;
     }
 
     private static void RenameEntry(ZipArchive archive, string oldName, string newName)
